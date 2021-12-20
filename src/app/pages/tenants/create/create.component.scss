@@ -1,0 +1,17 @@
+.autocomplete-item-wrapper {
+  margin-top: 2.35rem;
+  position: absolute;
+  z-index: 1000;
+  max-height: 200px;
+  overflow: auto;
+  width: 100%;
+  background-color: #fff;
+}
+
+.property-element {
+  cursor: pointer;
+}
+
+.property-element:hover {
+  background-color: #edfff7;
+}

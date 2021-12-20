@@ -1,0 +1,334 @@
+<div
+  class="header pb-2 pt-2 pt-lg-2 d-flex align-items-center"
+  style="min-height: 300px"
+>
+  <!-- Mask -->
+  <span class="mask bg-gradient-danger opacity-8"></span>
+  <!-- Header container -->
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-lg-10 col-md-10">
+        <h1 *ngIf="this.user" class="display-3 text-white">
+          Hello {{ this.user?.first_name }}
+        </h1>
+        <p class="text-white mt-0">
+          This is your profile. You can view & update your details here.
+          <span *ngIf="this.user?.role === 'user'"
+            >Also you can view your payments and the property that you are
+            assigned to</span
+          >
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="container-fluid mt--7">
+  <div class="row">
+    <div class="col-xl-7 mb-5 order-xl-1">
+      <div class="card bg-secondary shadow">
+        <div class="card-header bg-white border-0">
+          <div class="row align-items-center">
+            <div class="col-8">
+              <h3 class="mb-0">My account</h3>
+            </div>
+            <div class="col-4 text-right">
+              <button (click)="changeFormEdit()" class="btn btn-sm btn-primary">
+                Edit
+              </button>
+            </div>
+          </div>
+        </div>
+        <div class="card-body">
+          <form (submit)="updateUserDetails()" [formGroup]="userForm">
+            <h6 class="heading-small text-muted mb-4">User information</h6>
+            <div class="pl-lg-4">
+              <div class="row">
+                <div class="col-lg-4">
+                  <div class="form-group">
+                    <label class="form-control-label" for="input-first-name"
+                      >First name</label
+                    >
+                    <input
+                      class="form-control form-control-alternative"
+                      formControlName="first_name"
+                      id="input-first-name"
+                      placeholder="First name"
+                      type="text"
+                      value="Lucky"
+                    />
+                  </div>
+                </div>
+                <div class="col-lg-4">
+                  <div class="form-group">
+                    <label class="form-control-label" for="input-middle-name"
+                      >Middle name</label
+                    >
+                    <input
+                      class="form-control form-control-alternative"
+                      formControlName="middle_name"
+                      id="input-middle-name"
+                      placeholder="Middle name"
+                      type="text"
+                    />
+                  </div>
+                </div>
+                <div class="col-lg-4">
+                  <div class="form-group">
+                    <label class="form-control-label" for="input-last-name"
+                      >Last name</label
+                    >
+                    <input
+                      class="form-control form-control-alternative"
+                      formControlName="last_name"
+                      id="input-last-name"
+                      placeholder="Last name"
+                      type="text"
+                      value="Jesse"
+                    />
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-lg-6">
+                  <div class="form-group">
+                    <label class="form-control-label" for="input-username"
+                      >Mobile</label
+                    >
+                    <input
+                      class="form-control form-control-alternative"
+                      formControlName="phone"
+                      id="input-username"
+                      placeholder="Mobile"
+                      type="number"
+                      value="lucky.jesse"
+                    />
+                  </div>
+                </div>
+                <div class="col-lg-6">
+                  <div class="form-group">
+                    <label class="form-control-label" for="input-email"
+                      >Email address</label
+                    >
+                    <input
+                      class="form-control form-control-alternative"
+                      formControlName="email"
+                      id="input-email"
+                      placeholder="jesse@example.com"
+                      type="email"
+                    />
+                  </div>
+                </div>
+              </div>
+
+              <button
+                *ngIf="isEdit"
+                [disabled]="this.userForm.invalid"
+                class="btn btn-primary px-4"
+                type="submit"
+              >
+                Submit
+              </button>
+            </div>
+            <!-- <hr class="my-4" /> -->
+            <!-- Address -->
+            <!-- <h6 class="heading-small text-muted mb-4">Contact information</h6> -->
+            <!-- <div class="pl-lg-4">
+              <div class="row">
+                <div class="col-md-12">
+                  <div class="form-group">
+                    <label class="form-control-label" for="input-address"
+                      >Address</label
+                    >
+                    <input
+                      id="input-address"
+                      class="form-control form-control-alternative"
+                      placeholder="Home Address"
+                      value="Bld Mihail Kogalniceanu, nr. 8 Bl 1, Sc 1, Ap 09"
+                      type="text"
+                    />
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-lg-4">
+                  <div class="form-group">
+                    <label class="form-control-label" for="input-city"
+                      >City</label
+                    >
+                    <input
+                      type="text"
+                      id="input-city"
+                      class="form-control form-control-alternative"
+                      placeholder="City"
+                      value="New York"
+                    />
+                  </div>
+                </div>
+                <div class="col-lg-4">
+                  <div class="form-group">
+                    <label class="form-control-label" for="input-country"
+                      >Country</label
+                    >
+                    <input
+                      type="text"
+                      id="input-country"
+                      class="form-control form-control-alternative"
+                      placeholder="Country"
+                      value="United States"
+                    />
+                  </div>
+                </div>
+                <div class="col-lg-4">
+                  <div class="form-group">
+                    <label class="form-control-label" for="input-country"
+                      >Postal code</label
+                    >
+                    <input
+                      type="number"
+                      id="input-postal-code"
+                      class="form-control form-control-alternative"
+                      placeholder="Postal code"
+                    />
+                  </div>
+                </div>
+              </div>
+            </div> -->
+            <!-- <hr class="my-4" /> -->
+            <!-- Description -->
+            <!-- <h6 class="heading-small text-muted mb-4">About me</h6> -->
+            <!-- <div class="pl-lg-4">
+              <div class="form-group">
+                <label>About Me</label>
+                <textarea
+                  rows="4"
+                  class="form-control form-control-alternative"
+                  placeholder="A few words about you ..."
+                >
+A beautiful Dashboard for Bootstrap 4. It is Free and Open Source.</textarea
+                >
+              </div>
+            </div> -->
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-xl-5 order-xl-2 mb-xl-0">
+      <div class="card card-profile shadow">
+        <div class="card-header d-flex mb-2">
+          <h3 class="mb-0">Property Details</h3>
+          <a
+            *ngIf="user?.in_arrears"
+            class="btn btn-sm btn-danger ml-auto"
+            href="javascript:void(0)"
+            >In arreas</a
+          >
+        </div>
+        <div class="card-body pt-0">
+          <div *ngIf="user?.property_id">
+            <div class="row">
+              <div class="col-xl-4 col-md-3">
+                <p class="font-weight-bold color-primary small">Name:</p>
+              </div>
+              <div class="col-xl-8 col-md-9 ml-auto">
+                <p class="small">
+                  {{ user?.property_property_name }}
+                </p>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-xl-4 col-md-3">
+                <p class="font-weight-bold color-primary small">Address:</p>
+              </div>
+              <div class="col-xl-8 col-md-9 ml-auto">
+                <p class="small">
+                  {{ user?.property_address_line_1 }}
+                </p>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-xl-4 col-md-3">
+                <p class="font-weight-bold color-primary small">Room:</p>
+              </div>
+              <div class="col-xl-8 col-md-9 ml-auto">
+                <p class="small">
+                  {{ user?.room_number }}
+                </p>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-xl-4 col-md-3">
+                <p class="font-weight-bold color-primary small">Postal Code:</p>
+              </div>
+              <div class="col-xl-8 col-md-9 ml-auto">
+                <p class="small">
+                  {{ user?.property_post_code }}
+                </p>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-xl-4 col-md-3">
+                <p class="font-weight-bold color-primary small">Rent:</p>
+              </div>
+              <div class="col-xl-8 col-md-9">
+                <p class="small">
+                  <span *ngIf="user && user.rent">$</span> {{ user?.rent }}
+                </p>
+              </div>
+            </div>
+          </div>
+          <h4 class="text-center my-4 text-danger" *ngIf="!user?.property_id">
+            You are not assigned to a property
+          </h4>
+          <div>
+            <h3 class="mb-0 mt-2">Payments</h3>
+            <hr class="my-2" />
+            <div *ngIf="!payments || payments.length <= 0" class="text-center">
+              <h4>No data is available</h4>
+            </div>
+            <div
+              *ngIf="payments && payments.length > 0"
+              class="table-responsive"
+            >
+              <table class="table align-items-center table-flush">
+                <thead class="thead-light">
+                  <tr>
+                    <th scope="col">Amount</th>
+                    <th scope="col">Date</th>
+                    <th scope="col">Is On Time</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr
+                    *ngFor="let payment of payments; trackBy: trackByPaymentId"
+                  >
+                    <th scope="row">
+                      <div class="media align-items-center">
+                        <div class="media-body">
+                          <span class="mb-0 text-sm">
+                            <span *ngIf="payment && payment.amount">$</span>
+                            {{ payment.amount }}
+                          </span>
+                        </div>
+                      </div>
+                    </th>
+                    <td>
+                      {{ payment.payment_date | date }}
+                    </td>
+                    <td>
+                      {{ payment.is_on_time ? "Yes" : "No" }}
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <a href="javascript:void(0)">Show more</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

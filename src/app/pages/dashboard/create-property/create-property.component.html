@@ -1,0 +1,288 @@
+<ng-template #modal class="modal fade">
+  <div class="modal-header">
+    <h5 class="modal-title">{{ modalConfig.modalTitle }}</h5>
+  </div>
+  <form
+    (submit)="!this.propertyFromServer ? create() : updateProperty()"
+    [formGroup]="createProperty"
+  >
+    <div class="modal-body">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-4 col-lg-4">
+            <div class="form-group">
+              <label class="small" for="createAddress1">Property Name</label>
+              <div class="input-group input-group-alternative">
+                <input
+                  id="createAddress1"
+                  class="form-control"
+                  placeholder="Property Name"
+                  formControlName="property_name"
+                  type="text"
+                />
+              </div>
+              <!--Error-->
+              <div
+                *ngIf="
+                  createProperty.controls['property_name'].invalid &&
+                  createProperty.controls['property_name'].touched &&
+                  createProperty.controls['property_name'].dirty
+                "
+              >
+                <small class="text-danger"
+                  ><sup></sup>Enter valid property name</small
+                >
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4 col-lg-4">
+            <div class="form-group">
+              <label class="small" for="createAddress1">Address Line 1*</label>
+              <div class="input-group input-group-alternative">
+                <input
+                  id="createAddress1"
+                  class="form-control"
+                  placeholder="Address line 1"
+                  formControlName="address_line_1"
+                  type="text"
+                />
+              </div>
+              <!--Error-->
+              <div
+                *ngIf="
+                  createProperty.controls['address_line_1'].invalid &&
+                  createProperty.controls['address_line_1'].touched &&
+                  createProperty.controls['address_line_1'].dirty
+                "
+              >
+                <small class="text-danger"
+                  ><sup>*</sup>Please enter property address</small
+                >
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4 col-lg-4">
+            <div class="form-group">
+              <label class="small" for="createAddress2">Address Line 2</label>
+              <div class="input-group input-group-alternative">
+                <input
+                  id="createAddress2"
+                  class="form-control"
+                  placeholder="Address Line 2"
+                  formControlName="address_line_2"
+                  type="text"
+                />
+              </div>
+              <!--Error-->
+              <div
+                *ngIf="
+                  createProperty.controls['address_line_2'].invalid &&
+                  createProperty.controls['address_line_2'].touched &&
+                  createProperty.controls['address_line_2'].dirty
+                "
+              >
+                <small class="text-danger"
+                  ><sup>*</sup>Please enter the town</small
+                >
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-4 col-lg-4">
+            <div class="form-group">
+              <label class="small" for="createTown">Town*</label>
+              <div class="input-group input-group-alternative">
+                <input
+                  id="createTown"
+                  class="form-control"
+                  placeholder="Town"
+                  formControlName="town"
+                  type="text"
+                />
+              </div>
+              <!--Error-->
+              <div
+                *ngIf="
+                  createProperty.controls['town'].invalid &&
+                  createProperty.controls['town'].touched &&
+                  createProperty.controls['town'].dirty
+                "
+              >
+                <small class="text-danger"
+                  ><sup>*</sup>Please enter the town</small
+                >
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-4 col-lg-4">
+            <div class="form-group">
+              <label class="small" for="createRegion">Region</label>
+              <div class="input-group input-group-alternative">
+                <input
+                  id="createRegion"
+                  class="form-control"
+                  placeholder="Region"
+                  formControlName="region"
+                  type="text"
+                />
+              </div>
+              <!--Error-->
+              <div
+                *ngIf="
+                  createProperty.controls['region'].invalid &&
+                  createProperty.controls['region'].touched &&
+                  createProperty.controls['region'].dirty
+                "
+              >
+                <small class="text-danger"
+                  ><sup>*</sup>Please enter the region</small
+                >
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-4 col-lg-4">
+            <div class="form-group">
+              <label class="small" for="createCountry">Country</label>
+              <div class="input-group input-group-alternative">
+                <input
+                  id="createCountry"
+                  class="form-control"
+                  placeholder="Country"
+                  formControlName="country"
+                  type="text"
+                />
+              </div>
+              <!--Error-->
+              <div
+                *ngIf="
+                  createProperty.controls['country'].invalid &&
+                  createProperty.controls['country'].touched &&
+                  createProperty.controls['country'].dirty
+                "
+              >
+                <small class="text-danger"
+                  ><sup>*</sup>Please enter your city name</small
+                >
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-4 col-lg-4">
+            <div class="form-group">
+              <label class="small" for="createPostCode">PostCode</label>
+              <div class="input-group input-group-alternative">
+                <input
+                  id="createPostCode"
+                  class="form-control"
+                  placeholder="PostCode"
+                  formControlName="post_code"
+                  type="text"
+                />
+              </div>
+              <!--Error-->
+              <div
+                *ngIf="
+                  createProperty.controls['post_code'].invalid &&
+                  createProperty.controls['post_code'].touched &&
+                  createProperty.controls['post_code'].dirty
+                "
+              >
+                <small class="text-danger"
+                  ><sup>*</sup>Please enter your city name</small
+                >
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-4 col-lg-4">
+            <div class="form-group">
+              <label class="small" for="createPropertyType"
+                >Property type*</label
+              >
+              <div ngbDropdown class="input-group input-group-alternative">
+                <select
+                  class="custom-select"
+                  id="createPropertyType"
+                  (change)="changeCity($event)"
+                  formControlName="property_type"
+                >
+                  <option value="" disabled>Choose type</option>
+                  <option
+                    *ngFor="let propertyType of propertyTypes"
+                    [value]="propertyType"
+                  >
+                    {{ propertyType }}
+                  </option>
+                </select>
+                <!--Error-->
+                <div
+                  *ngIf="
+                    createProperty.controls['property_type'].invalid &&
+                    createProperty.controls['property_type'].touched &&
+                    createProperty.controls['property_type'].dirty
+                  "
+                >
+                  <small class="text-danger"
+                    ><sup>*</sup>Please enter your city name</small
+                  >
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-4 col-lg-4">
+            <div class="form-group">
+              <label class="small" for="createNoOfRooms">No. of Rooms*</label>
+              <div class="input-group input-group-alternative">
+                <input
+                  id="createNoOfRooms"
+                  class="form-control"
+                  placeholder="No. of Rooms"
+                  formControlName="no_of_rooms"
+                  type="number"
+                />
+              </div>
+              <!--Error-->
+              <div
+                *ngIf="
+                  createProperty.controls['no_of_rooms'].invalid &&
+                  createProperty.controls['no_of_rooms'].touched &&
+                  createProperty.controls['no_of_rooms'].dirty
+                "
+              >
+                <small class="text-danger"
+                  ><sup>*</sup>Please enter your city name</small
+                >
+              </div>
+            </div>
+          </div>
+
+          <div class="col-12">
+            <div class="form-group">
+              <label class="small" for="createNotes">Notes</label>
+              <div class="input-group input-group-alternative">
+                <textarea
+                  id="createNotes"
+                  class="form-control"
+                  formControlName="notes"
+                  placeholder="Notes"
+                ></textarea>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button
+        [disabled]="createProperty.invalid"
+        class="btn btn-primary"
+        type="submit"
+      >
+        {{ !this.propertyFromServer ? "Create Property" : "Update Property" }}
+      </button>
+    </div>
+  </form>
+</ng-template>

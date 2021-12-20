@@ -1,0 +1,375 @@
+<ng-template #modal class="modal fade">
+  <div class="modal-header">
+    <h5 class="modal-title">{{ modalConfig.modalTitle }}</h5>
+  </div>
+  <div class="modal-body">
+    <div class="container">
+      <form [formGroup]="createUser">
+        <div class="row">
+          <div class="col-md-4 col-lg-4">
+            <div class="form-group">
+              <label class="small" for="createFirst"
+                >First Name<sup>*</sup></label
+              >
+              <div class="input-group input-group-alternative">
+                <input
+                  id="createFirst"
+                  class="form-control"
+                  placeholder="First name"
+                  formControlName="first_name"
+                  type="text"
+                />
+              </div>
+              <!--Error-->
+              <div
+                *ngIf="
+                  createUser.controls['first_name'].invalid &&
+                  createUser.controls['first_name'].touched &&
+                  createUser.controls['first_name'].dirty
+                "
+              >
+                <small class="text-danger"
+                  ><sup>*</sup>Please Enter valid first name</small
+                >
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4 col-lg-4">
+            <div class="form-group">
+              <label class="small" for="createMiddle">Middle Name</label>
+              <div class="input-group input-group-alternative">
+                <input
+                  id="createMiddle"
+                  class="form-control"
+                  placeholder="Middle name"
+                  formControlName="middle_name"
+                  type="text"
+                />
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-4 col-lg-4">
+            <div class="form-group">
+              <label class="small" for="createLastName"
+                >Last Name<sup>*</sup></label
+              >
+              <div class="input-group input-group-alternative">
+                <input
+                  id="createLastName"
+                  class="form-control"
+                  placeholder="Last name"
+                  formControlName="last_name"
+                  type="text"
+                />
+              </div>
+              <!--Error-->
+              <div
+                *ngIf="
+                  createUser.controls['last_name'].invalid &&
+                  createUser.controls['last_name'].touched &&
+                  createUser.controls['last_name'].dirty
+                "
+              >
+                <small class="text-danger"
+                  ><sup>*</sup>Please Enter valid last name</small
+                >
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-4 col-lg-4">
+            <div class="form-group">
+              <label class="small" for="userRole">Role<sup>*</sup></label>
+              <div class="input-group input-group-alternative">
+                <select
+                  class="custom-select"
+                  id="userRole"
+                  (change)="changeUser($event)"
+                  formControlName="role"
+                >
+                  <option value="" disabled>Choose type</option>
+                  <option *ngFor="let userRole of userRoles" [value]="userRole">
+                    {{ userRole }}
+                  </option>
+                </select>
+              </div>
+              <!--Error-->
+              <div
+                *ngIf="
+                  createUser.controls['email'].invalid &&
+                  createUser.controls['email'].touched &&
+                  createUser.controls['email'].dirty
+                "
+              >
+                <small class="text-danger"
+                  ><sup>*</sup>Please Enter valid email</small
+                >
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-4 col-lg-4">
+            <div class="form-group">
+              <label class="small" for="createEmail">Email</label>
+              <div class="input-group input-group-alternative">
+                <input
+                  id="createEmail"
+                  email
+                  class="form-control"
+                  placeholder="Email"
+                  formControlName="email"
+                  type="email"
+                />
+              </div>
+              <!--Error-->
+              <div
+                *ngIf="
+                  createUser.controls['email'].invalid &&
+                  createUser.controls['email'].touched &&
+                  createUser.controls['email'].dirty
+                "
+              >
+                <small class="text-danger"
+                  ><sup>*</sup>Please Enter valid email</small
+                >
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-4 col-lg-4">
+            <div class="form-group">
+              <label class="small" for="createPhone">Phone<sup>*</sup></label>
+              <div class="input-group input-group-alternative">
+                <input
+                  id="createPhone"
+                  class="form-control"
+                  placeholder="Phone"
+                  formControlName="phone"
+                  type="tel"
+                />
+              </div>
+              <!--Error-->
+              <div
+                *ngIf="
+                  createUser.controls['phone'].invalid &&
+                  createUser.controls['phone'].touched &&
+                  createUser.controls['phone'].dirty
+                "
+              >
+                <small class="text-danger"
+                  ><sup>*</sup>Please Enter valid phone no.</small
+                >
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-4 col-lg-4">
+            <div class="form-group">
+              <label class="small" for="createProperty"
+                >Property<sup>*</sup></label
+              >
+              <div class="input-group input-group-alternative">
+                <input
+                  autocomplete="off"
+                  (clickOutside)="outsideClick()"
+                  #searchBox
+                  (input)="search(searchBox.value)"
+                  id="createProperty"
+                  (click)="clickSearchField()"
+                  class="form-control"
+                  placeholder="Property"
+                  [value]="property?.property_name"
+                  type="text"
+                />
+                <div
+                  *ngIf="isSearchClicked"
+                  class="autocomplete-item-wrapper border-bottom border-left border-right rounded-bottom"
+                >
+                  <div
+                    *ngFor="let property of properties"
+                    class="p-2 property-element"
+                    (click)="selectElement(property)"
+                  >
+                    <small
+                      >{{ property.property_name }} ({{ property.town }})</small
+                    >
+                  </div>
+                  <div *ngIf="properties.length <= 0" class="p-3">
+                    Sorry no properties
+                  </div>
+                </div>
+              </div>
+
+              <!--Error-->
+              <div
+                *ngIf="
+                  createUser.controls['property'].invalid &&
+                  createUser.controls['property'].touched &&
+                  createUser.controls['property'].dirty
+                "
+              >
+                <small class="text-danger"
+                  ><sup>*</sup>Please Select valid property</small
+                >
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-4 col-lg-4">
+            <div class="form-group">
+              <label class="small" for="propertyRent">Rent<sup>*</sup></label>
+              <div class="input-group input-group-alternative">
+                <div class="input-group-prepend">
+                  <span class="input-group-text"
+                    ><i class="fa fa-dollar-sign"></i
+                  ></span>
+                </div>
+                <input
+                  id="propertyRent"
+                  class="form-control"
+                  placeholder="Rent"
+                  type="number"
+                  name="rent"
+                  formControlName="rent"
+                />
+              </div>
+
+              <!--Error-->
+              <div
+                *ngIf="
+                  createUser.controls['rent'].invalid &&
+                  createUser.controls['rent'].touched &&
+                  createUser.controls['rent'].dirty
+                "
+              >
+                <small class="text-danger"
+                  ><sup>*</sup>Please Enter valid rental amount</small
+                >
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-4 col-lg-4">
+            <div class="form-group">
+              <label class="small" for="createPaymentFrequency"
+                >Payment Frequency<sup>*</sup></label
+              >
+              <div class="input-group input-group-alternative">
+                <input
+                  id="createPaymentFrequency"
+                  class="form-control"
+                  placeholder="Payment Frequency"
+                  type="number"
+                  name="payment_frequency"
+                  formControlName="payment_frequency"
+                />
+              </div>
+              <!--Error-->
+              <div
+                *ngIf="
+                  createUser.controls['payment_frequency'].invalid &&
+                  createUser.controls['payment_frequency'].touched &&
+                  createUser.controls['payment_frequency'].dirty
+                "
+              >
+                <small class="text-danger"
+                  ><sup>*</sup>Please Select valid payment frequency</small
+                >
+              </div>
+            </div>
+          </div>
+
+          <div *ngIf="!this.userFromServer" class="col-md-4 col-lg-4">
+            <div class="form-group">
+              <label class="small" for="createUserPassword"
+                >Password<sup>*</sup></label
+              >
+              <div class="input-group input-group-alternative">
+                <input
+                  id="createUserPassword"
+                  class="form-control"
+                  placeholder="Password"
+                  type="password"
+                  name="password"
+                  formControlName="password"
+                />
+              </div>
+              <!--Error-->
+              <div
+                *ngIf="
+                  createUser.controls['password'].invalid &&
+                  createUser.controls['password'].touched &&
+                  createUser.controls['password'].dirty
+                "
+              >
+                <small class="text-danger"
+                  ><sup>*</sup>Please Select valid password</small
+                >
+              </div>
+            </div>
+          </div>
+
+          <div
+            *ngIf="
+              property &&
+              (property.property_type === 'HMO' ||
+                property.property_type === 'Rooms')
+            "
+            class="col-md-4 col-lg-4"
+          >
+            <div class="form-group">
+              <label class="small" for="createRoom">Room No.<sup>*</sup></label>
+              <div class="input-group input-group-alternative">
+                <input
+                  id="createRoom"
+                  class="form-control"
+                  placeholder="Room No."
+                  formControlName="room_number"
+                  type="number"
+                />
+              </div>
+
+              <!--Error-->
+              <div
+                *ngIf="
+                  createUser.controls['room_number'].invalid &&
+                  createUser.controls['room_number'].touched &&
+                  createUser.controls['room_number'].dirty
+                "
+              >
+                <small class="text-danger"
+                  ><sup>*</sup>Please Select valid room no.</small
+                >
+              </div>
+            </div>
+          </div>
+
+          <div class="col-12">
+            <div class="form-group">
+              <label class="small" for="createNotes">Notes</label>
+              <div class="input-group input-group-alternative">
+                <textarea
+                  id="createNotes"
+                  class="form-control"
+                  formControlName="notes"
+                  placeholder="Notes"
+                ></textarea>
+              </div>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button
+      type="button"
+      (click)="!this.userFromServer ? create() : updateUser()"
+      class="btn btn-primary"
+      [disabled]="createUser.invalid"
+    >
+      {{ !this.userFromServer ? "Save changes" : "Update User" }}
+    </button>
+  </div>
+</ng-template>

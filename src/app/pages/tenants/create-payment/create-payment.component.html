@@ -1,0 +1,178 @@
+<ng-template #modal class="modal fade">
+  <div class="modal-header">
+    <h5 class="modal-title">Payment</h5>
+  </div>
+  <div class="modal-body">
+    <div class="container">
+      <div class="user-details pt-3 pl-3 mb-2 rounded">
+        <div class="row">
+          <div class="col-md-6"><p class="font-weight-bold">Name:</p></div>
+          <div class="col-md-6">
+            {{ this.user?.first_name + " " + this.user?.last_name }}
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-6"><p class="font-weight-bold">Phone:</p></div>
+          <div class="col-md-6">
+            {{ this.user?.phone }}
+          </div>
+        </div>
+      </div>
+      <form [formGroup]="createPayment">
+        <div class="row">
+          <div class="col-md-6 col-lg-6">
+            <div class="form-group">
+              <label class="small" for="paymentAmount"
+                >Amount<sup>*</sup></label
+              >
+              <div class="input-group input-group-alternative">
+                <input
+                  class="form-control"
+                  formControlName="amount"
+                  id="paymentAmount"
+                  type="number"
+                />
+              </div>
+
+              <!--Error-->
+              <div
+                *ngIf="
+                  createPayment.controls['amount'].invalid &&
+                  createPayment.controls['amount'].touched &&
+                  createPayment.controls['amount'].dirty
+                "
+              >
+                <small class="text-danger"
+                  ><sup>*</sup>Please enter a valid amount</small
+                >
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6 col-lg-6">
+            <div class="form-group">
+              <label class="small" for="paymentDate">Date<sup>*</sup></label>
+              <div class="input-group input-group-alternative">
+                <input
+                  #d="ngbDatepicker"
+                  (click)="d.toggle()"
+                  class="form-control"
+                  formControlName="payment_date"
+                  id="paymentDate"
+                  ngbDatepicker
+                  type="text"
+                />
+              </div>
+              <!--Error-->
+              <div
+                *ngIf="
+                  createPayment.controls['payment_date'].invalid &&
+                  (createPayment.controls['payment_date'].touched ||
+                    createPayment.controls['payment_date'].dirty)
+                "
+              >
+                <small class="text-danger"
+                  ><sup>*</sup>Please select a date</small
+                >
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6 col-lg-6">
+            <div class="form-group">
+              <label class="small" for="paymentType"
+                >Payment Type<sup>*</sup></label
+              >
+              <div class="input-group input-group-alternative" ngbDropdown>
+                <select
+                  class="custom-select"
+                  formControlName="payment_type"
+                  id="createPropertyType"
+                >
+                  <option disabled value="">Payment type</option>
+                  <option
+                    *ngFor="let paymentType of paymentTypes"
+                    [value]="paymentType"
+                  >
+                    {{ paymentType }}
+                  </option>
+                </select>
+              </div>
+
+              <!--Error-->
+              <div
+                *ngIf="
+                  createPayment.controls['payment_type'].invalid &&
+                  (createPayment.controls['payment_type'].touched ||
+                    createPayment.controls['payment_type'].dirty)
+                "
+              >
+                <small class="text-danger"
+                  ><sup>*</sup>Please select a value</small
+                >
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-6 col-lg-6">
+            <div class="form-group">
+              <label class="small" for="isOnTime">On time?<sup>*</sup></label>
+              <div class="input-group">
+                <div>
+                  <input
+                    [value]="true"
+                    class="m-2"
+                    formControlName="is_on_time"
+                    type="radio"
+                  />
+                  <span>Yes</span>
+                </div>
+                <div>
+                  <input
+                    [value]="false"
+                    class="m-2"
+                    formControlName="is_on_time"
+                    type="radio"
+                  />
+                  <span>No</span>
+                </div>
+              </div>
+              <!--Error-->
+              <div
+                *ngIf="
+                  createPayment.controls['is_on_time'].invalid &&
+                  (createPayment.controls['is_on_time'].touched ||
+                    createPayment.controls['is_on_time'].dirty)
+                "
+              >
+                <small class="text-danger"
+                  ><sup>*</sup>Please select a value</small
+                >
+              </div>
+            </div>
+          </div>
+          <div class="col-12">
+            <div class="form-group">
+              <label class="small" for="createNotes">Notes</label>
+              <div class="input-group input-group-alternative">
+                <textarea
+                  class="form-control"
+                  id="createNotes"
+                  placeholder="Notes"
+                ></textarea>
+              </div>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button
+      (click)="addPayment()"
+      [disabled]="createPayment.invalid"
+      class="btn btn-primary"
+      type="button"
+    >
+      Add payment
+    </button>
+  </div>
+</ng-template>

@@ -1,0 +1,131 @@
+<div class="header bg-gradient-success pb-3 pt-2 pt-md-8">
+  <div class="container-fluid">
+    <div class="header-body">
+      <div class="row">
+        <div class="container align-content-end">
+          <button
+            type="button"
+            class="btn btn-primary my-4"
+            (click)="openCreateModal()"
+          >
+            Create Tenant
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container-fluid mt--3">
+  <!-- Table -->
+  <div class="row">
+    <div class="col">
+      <div class="card shadow">
+        <div class="card-header border-0">
+          <h3 class="mb-0">Property table</h3>
+        </div>
+        <div class="table-responsive">
+          <table class="table align-items-center table-flush">
+            <thead class="thead-light">
+              <tr>
+                <th scope="col">Name</th>
+                <th scope="col">Property</th>
+                <th scope="col">Is arrears</th>
+                <th scope="col">Rent ($)</th>
+                <th scope="col"></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let user of users">
+                <th scope="row">
+                  <div class="media align-items-center">
+                    <div class="media-body">
+                      <span class="mb-0 text-sm">{{
+                        user.first_name + " " + user.last_name
+                      }}</span>
+                    </div>
+                  </div>
+                </th>
+                <td>
+                  {{ user.property_property_name || "-" }}
+                </td>
+                <td>
+                  {{ user.in_arrears ? "Yes" : "No" }}
+                </td>
+                <td>
+                  <div class="d-flex align-items-center">
+                    {{ user.rent ?? "-" }}
+                  </div>
+                </td>
+                <td class="text-right">
+                  <div ngbDropdown placement="bottom-right">
+                    <a
+                      class="btn btn-sm btn-icon-only text-light"
+                      ngbDropdownToggle
+                    >
+                      <i class="fas fa-ellipsis-v"></i>
+                    </a>
+                    <div
+                      ngbDropdownMenu
+                      class="dropdown-menu-right dropdown-menu-arrow"
+                    >
+                      <a
+                        (click)="openUpdateModal(user)"
+                        class="dropdown-item"
+                        href="javascript:void(0)"
+                        >Edit</a
+                      >
+                      <a
+                        (click)="addPayment(user)"
+                        class="dropdown-item"
+                        href="javascript:void(0)"
+                        >Add Payment</a
+                      >
+                      <a
+                        class="dropdown-item"
+                        href="javascript:void(0)"
+                        [swal]="{
+                          title: 'Are you sure',
+                          showCancelButton: true
+                        }"
+                        (confirm)="deleteUser(user.id)"
+                        >Delete User</a
+                      >
+                    </div>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="card-footer py-4">
+          <app-pagination
+            [totalPages]="this.totalPages"
+            (pageEvent)="prevNextPage($event)"
+          ></app-pagination>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<app-create
+  #modal
+  (submitForm)="createUser($event)"
+  [modalConfig]="createModalConfig"
+>
+</app-create>
+
+<app-create
+  #updateModal
+  [userFromServer]="userFromServer"
+  (updateForm)="updateUser($event)"
+  [modalConfig]="updateModalConfig"
+>
+  <app-create-payment
+    #paymentModal
+    [modalConfig]="paymentModalConfig"
+    [user]="userFromServer"
+    (submitForm)="createPayment($event)"
+  ></app-create-payment>
+</app-create>

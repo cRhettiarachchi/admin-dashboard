@@ -1,0 +1,152 @@
+<div class="header bg-gradient-success pb-3 pt-2 pt-md-8">
+  <div class="container-fluid">
+    <div class="header-body">
+      <div class="row">
+        <div class="container align-content-end">
+          <button
+            type="button"
+            class="btn btn-primary my-4"
+            (click)="openCreateModal()"
+          >
+            Create property
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container-fluid mt--3">
+  <!-- Table -->
+  <div class="row">
+    <div class="col">
+      <div class="card shadow">
+        <div class="card-header border-0">
+          <h3 class="mb-0">Property table</h3>
+        </div>
+        <div class="table-responsive">
+          <table class="table align-items-center table-flush">
+            <thead class="thead-light">
+              <tr>
+                <th scope="col">Property name</th>
+                <th scope="col">Type</th>
+                <th scope="col">No. of rooms</th>
+                <th scope="col">Town</th>
+                <th scope="col">Country</th>
+                <th scope="col"></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr
+                *ngFor="let property of allProperties; trackBy: trackByProperty"
+              >
+                <th scope="row">
+                  <div class="media align-items-center">
+                    <div class="media-body">
+                      <span class="mb-0 text-sm">{{
+                        property.property_name ?? "-"
+                      }}</span>
+                    </div>
+                  </div>
+                </th>
+                <td>
+                  <div class="media align-items-center">
+                    <div class="media-body">
+                      <span class="mb-0 text-sm">{{
+                        property.property_type ?? "-"
+                      }}</span>
+                    </div>
+                  </div>
+                </td>
+                <td>
+                  <div class="media align-items-center">
+                    <div class="media-body">
+                      <span class="mb-0 text-sm">{{
+                        property.no_of_rooms ?? "-"
+                      }}</span>
+                    </div>
+                  </div>
+                </td>
+                <td>
+                  <div class="media align-items-center">
+                    <div class="media-body">
+                      <span class="mb-0 text-sm">{{
+                        property.town ?? "-"
+                      }}</span>
+                    </div>
+                  </div>
+                </td>
+                <td>
+                  <div class="text-center">
+                    <div class="media-body">
+                      <span class="mb-0 text-sm">{{
+                        property.country ?? "-"
+                      }}</span>
+                    </div>
+                  </div>
+                </td>
+                <td class="text-right">
+                  <div ngbDropdown placement="bottom-right">
+                    <a
+                      class="btn btn-sm btn-icon-only text-light"
+                      ngbDropdownToggle
+                    >
+                      <i class="fas fa-ellipsis-v"></i>
+                    </a>
+                    <div
+                      ngbDropdownMenu
+                      class="dropdown-menu-right dropdown-menu-arrow"
+                    >
+                      <a
+                        (click)="openUpdateModal('' + property.id)"
+                        class="dropdown-item"
+                        href="javascript:void(0)"
+                        >Edit</a
+                      >
+                      <a
+                        class="dropdown-item"
+                        href="javascript:void(0)"
+                        data-toggle="modal"
+                        data-target="#tenantManagement"
+                        >Tenant management</a
+                      >
+                      <a
+                        (confirm)="deleteProperty('' + property.id)"
+                        [swal]="{
+                          title: 'Are you sure',
+                          showCancelButton: true
+                        }"
+                        class="dropdown-item"
+                        href="javascript:void(0)"
+                        >Remove property</a
+                      >
+                    </div>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="card-footer py-4">
+          <app-pagination
+            [totalPages]="this.totalPages"
+            (pageEvent)="prevNextPage($event)"
+          ></app-pagination>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<app-create-property
+  #modal
+  [modalConfig]="createModalConfig"
+  (submitForm)="create($event)"
+></app-create-property>
+
+<app-create-property
+  #updateModal
+  (updateForm)="updateProperty($event)"
+  [modalConfig]="createModalConfig"
+  [propertyFromServer]="propertyFromServer"
+></app-create-property>

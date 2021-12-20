@@ -1,0 +1,78 @@
+<div class="header bg-gradient-success pb-3 pt-2 pt-md-8">
+  <div class="container-fluid">
+    <div class="header-body">
+      <!--      <div class="row">-->
+      <!--        <div class="container align-content-end">-->
+      <!--          <button type="button" class="btn btn-primary my-4">-->
+      <!--            Create property-->
+      <!--          </button>-->
+      <!--        </div>-->
+      <!--      </div>-->
+    </div>
+  </div>
+</div>
+
+<div class="container-fluid mt--3">
+  <!-- Table -->
+  <div class="row">
+    <div class="col">
+      <div class="card shadow">
+        <div class="card-header border-0">
+          <h3 class="mb-0">Payment table</h3>
+        </div>
+        <div class="table-responsive">
+          <table class="table align-items-center table-flush">
+            <thead class="thead-light">
+              <tr>
+                <th scope="col">Tenant name</th>
+                <th scope="col">Property name</th>
+                <th scope="col">Amount</th>
+                <th scope="col">Date</th>
+                <th scope="col">Is On Time</th>
+                <th scope="col"></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr
+                *ngFor="let payment of allPayments; trackBy: trackByPaymentId"
+              >
+                <th scope="row">
+                  <div class="media align-items-center">
+                    <div class="media-body">
+                      <span class="mb-0 text-sm">
+                        {{
+                          payment.user_first_name + " " + payment.user_last_name
+                        }}
+                      </span>
+                    </div>
+                  </div>
+                </th>
+                <td>
+                  {{ payment.property_property_name }}
+                </td>
+                <td>
+                  <span class="badge badge-dot mr-4">
+                    <!--                    <i class="bg-warning"></i> pending-->
+                    ${{ payment.amount }}
+                  </span>
+                </td>
+                <td>
+                  {{ payment.payment_date | date }}
+                </td>
+                <td>
+                  {{ payment.is_on_time ? "Yes" : "No" }}
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="card-footer py-4">
+          <app-pagination
+            (pageEvent)="prevNextPage($event)"
+            [totalPages]="this.totalPages"
+          ></app-pagination>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
